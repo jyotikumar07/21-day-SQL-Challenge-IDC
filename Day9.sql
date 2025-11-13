@@ -1,0 +1,29 @@
+-------- Practice Questions Day9 (11/12/2025)--------
+-- 1.Extract the year from all patient arrival dates.
+SELECT YEAR(arrival_date) AS arrival_year 
+FROM patients;
+
+-- 2.Calculate the length of stay for each patient (departure_date - arrival_date).
+SELECT name,
+	   DATEDIFF(departure_date, arrival_date ) AS stay_length 
+FROM patients;
+
+-- 3.Find all patients who arrived in a specific month.
+SELECT name, 
+	   MONTH(arrival_date) AS arrival_month 
+FROM patients ORDER BY arrival_month;
+
+----------------- Daily Challenge -----------------
+
+/* Question: Calculate the average length of stay (in days) for each service,
+   showing only services where the average stay is more than 7 days. 
+   Also show the count of patients and order by average stay descending.  */
+   
+SELECT service,
+	   CEIL(AVG(DATEDIFF(departure_date, arrival_date ))) AS stay_days,
+       COUNT(patient_id) AS num_patients
+FROM patients
+GROUP BY service
+HAVING stay_days >7
+ORDER BY stay_days DESC;
+   
